@@ -5445,8 +5445,6 @@ END IF !!if(l_conservation_clipping) then
        tmp1 = tmp1*inv_nstep           !flux_ at surface, averaged over sub-step
        pcprt_liq(i) = tmp1*inv_rhow    !convert flux_ (kg m-2 s-1) to pcp rate (m s-1)
  
-       qc_flx = qc_flx + tmp1 * dt 
-
        !!IF(l_debug .and. masterproc) WRITE(6,*) 'micro_p3_tend - 032 -'
        
        !!.................................................................
@@ -5734,8 +5732,6 @@ END IF !!if(l_conservation_clipping) then
 
        pcprt_liq(i) = pcprt_liq(i) + tmp1  !add pcp rate from cloud and rain
 
-       qr_flx = qr_flx + tmp1 * dt / inv_rhow 
-
     END IF ! log_qrpresent
  
     !! IF(l_debug .and. masterproc) WRITE(6,*) 'micro_p3_tend - 034 -'
@@ -5944,8 +5940,6 @@ END IF !!if(l_conservation_clipping) then
           tmp1 = tmp1*inv_nstep   !flux_ at surface, averaged over sub-step
           tmp1 = tmp1*inv_rhow    !convert flux_ (kg m-2 s-1) to pcp rate (m s-1), liquid-equivalent
           pcprt_sol(i) = pcprt_sol(i) + tmp1  !add pcp rate from
-
-          qi_flx = qi_flx + tmp1 * dt / inv_rhow 
 
        END IF qipresent
 
