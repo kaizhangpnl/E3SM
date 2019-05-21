@@ -27,20 +27,15 @@ setenv PTMP      /compyfs/zhan524/bld
 setenv ntasks 1600
 setenv nthrds 1
 
-setenv MYSRC     ${CCSMROOT}/archive/mysrc/mods_p3_v0.54ac
-setenv MYCLM     ${CCSMROOT}/archive/mysrc/mods_clm
+setenv MYSRC     ${CCSMROOT}/mods_p3_v0.54ac
+setenv MYCLM     ${CCSMROOT}/mods_clm
 
 setenv CASE     ${MACH}_${COMPSET}_${MRES}_${CCSMTAG}_v54a_clean_1600p
 setenv COMCASE  ${MACH}_${COMPSET}_${MRES}_${CCSMTAG}_v54a_clean_1600p
 
-setenv CASEROOT  ${CCSMROOT}/archive/cases/$CASE
-setenv RUNDIR    /compyfs/zhan524/csmruns/$CASE
+setenv CASEROOT  ${CCSMROOT}/cases/$CASE
+setenv RUNDIR    /compyfs/${USER}/csmruns/$CASE
 
-#
-# RUNDIR: $MEMBERWORK/$PROJECT/$CASE/run
-# EXEROOT: $CESMSCRATCHROOT/$CASE/bld
-# CESMSCRATCHROOT: $HOME/acme_scratch/$PROJECT
-#
 ####################################################################
 # Compile model
 ####################################################################
@@ -49,18 +44,6 @@ if ($compile_model > 0) then
    rm -rf $CASEROOT
    cd  $CCSMROOT/cime/scripts
 
-
-
-###usage: create_newcase [-h] [-d] [-v] [-s] --case CASE --compset COMPSET --res
-###                      RES [--mach MACH] [--compiler COMPILER] [--ninst NINST]
-###                      [--mpilib MPILIB] [--project PROJECT]
-###                      [--pecount PECOUNT] [--mach-dir MACH_DIR]
-###                      [--user-mods-dir USER_MODS_DIR] [--user-compset]
-###                      [--pesfile PESFILE] [--user-grid] [--gridfile GRIDFILE]
-###                      [--srcroot SRCROOT] [--test] [--walltime WALLTIME]
-###                      [-q QUEUE]
-
-
    ./create_newcase --case $CASEROOT --project e3sm --mach $MACH \
                     --res $RESOLUTION --compset $COMPSET
 
@@ -68,12 +51,9 @@ if ($compile_model > 0) then
 # set up case
 #====================================================================
 
-   ###./create_newcase -list grids
-
    cd $CASEROOT
 
    ./xmlchange -file env_run.xml   -id RUNDIR  -val $RUNDIR
-##   ./xmlchange -file env_build.xml -id EXEROOT -val $PTMP/$COMCASE/bld/
 
    ./xmlchange -file env_mach_pes.xml -id NTASKS_ATM -val $ntasks
    ./xmlchange -file env_mach_pes.xml -id NTHRDS_ATM -val $nthrds
@@ -146,8 +126,35 @@ cd $CASEROOT
 ./xmlchange  -file env_run.xml  -id  REST_OPTION     -val 'nmonths'
 ./xmlchange  -file env_run.xml  -id  DOUT_S          -val 'FALSE'
 
+cat << EOF
+so4_sz_thresh_icenuc   = 0.05e-6
+clubb_c14              = 1.06
+clubb_c1               = 1.1
+zmconv_ke              = 5.00E-06
+cld_macmic_num_steps = 6
+nucleate_ice_subgrid = 1.2
+micro_p3_l_mg2_qidep = .false.
+micro_p3_l_satadj = .false.
+micro_p3_l_crconevp = .false.
+micro_p3_l_massclip  = .true.
+micro_p3_l_limit_qidep_qinuc = .true.
+micro_p3_l_limit_qisub_qrevp = .true.
+micro_p3_num_steps = 6
+micro_p3_scale_berg = 1.0
+micro_p3_scale_qidep = 1.0
+micro_p3_l_cshd = .true.
+micro_p3_l_imlt = .true.
+micro_p3_l_ccol = .true.
+micro_p3_opt_cheti = 1
+micro_p3_opt_inuc  = 1 
+use_hetfrz_classnuc = .true.
+EOF
+
+cp ${CCSMROOT}/work/p3_lookup_table_1.dat ${RUNDIR}
+cp ${CCSMROOT}/work/p3_lookup_table_2.dat ${RUNDIR}
+
 # goto the case directory, make changes, and submit the job 
-# ./$CASE.submit
+./$CASE.submit
 
 endif
 
