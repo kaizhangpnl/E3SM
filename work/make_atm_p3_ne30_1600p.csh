@@ -12,7 +12,7 @@ set run_model     = 1   # 0 = No, >0 = Yes
 # Fetch code
 ####################################################################
 setenv CCSMTAG E3SM_20190418
-setenv CCSMROOT $HOME/compy/model/${CCSMTAG}
+setenv CCSMROOT /compyfs/${USER}/model/${CCSMTAG}
 
 ####################################################################
 # Machine, compset, PE layout etc.
