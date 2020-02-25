@@ -22,7 +22,7 @@ setenv COMPSET FC5AV1C-04Z1
 setenv RESOLUTION ne30_ne30
 setenv MRES ne30
 setenv MACH      compy
-setenv PTMP      /compyfs/zhan524/bld
+setenv PTMP      /compyfs/${USER}/bld
 
 setenv ntasks 1600
 setenv nthrds 1
@@ -120,20 +120,16 @@ cd $CASEROOT
 
 ./xmlchange  -file env_run.xml  -id  RUN_STARTDATE   -val '0000-01-01'
 ./xmlchange  -file env_run.xml  -id  RESUBMIT        -val '0'
-./xmlchange  -file env_run.xml  -id  STOP_N          -val '15'
-./xmlchange  -file env_run.xml  -id  STOP_OPTION     -val 'nmonths'
-./xmlchange  -file env_run.xml  -id  REST_N          -val '3'
-./xmlchange  -file env_run.xml  -id  REST_OPTION     -val 'nmonths'
+./xmlchange  -file env_run.xml  -id  STOP_N          -val '5'
+./xmlchange  -file env_run.xml  -id  STOP_OPTION     -val 'ndays'
+./xmlchange  -file env_run.xml  -id  REST_N          -val '5'
+./xmlchange  -file env_run.xml  -id  REST_OPTION     -val 'ndays'
 ./xmlchange  -file env_run.xml  -id  DOUT_S          -val 'FALSE'
 
 cat << EOF
-so4_sz_thresh_icenuc   = 0.05e-6
-clubb_c14              = 1.06
-clubb_c1               = 1.1
-zmconv_ke              = 5.00E-06
 cld_macmic_num_steps = 6
 nucleate_ice_subgrid = 1.2
-micro_p3_l_mg2_qidep = .false.
+micro_p3_l_mg2_qidep = .true.
 micro_p3_l_satadj = .false.
 micro_p3_l_crconevp = .false.
 micro_p3_l_massclip  = .true.
@@ -146,7 +142,7 @@ micro_p3_l_cshd = .true.
 micro_p3_l_imlt = .true.
 micro_p3_l_ccol = .true.
 micro_p3_opt_cheti = 1
-micro_p3_opt_inuc  = 1 
+micro_p3_opt_inuc  = 1
 use_hetfrz_classnuc = .true.
 EOF
 
