@@ -27,7 +27,7 @@ setenv PTMP      /compyfs/${USER}/bld
 setenv ntasks 1600
 setenv nthrds 1
 
-setenv MYSRC     ${CCSMROOT}/mods_p3_v0.54ac
+setenv MYSRC     ${CCSMROOT}/mods_v1_p3_cmdv
 setenv MYCLM     ${CCSMROOT}/mods_clm
 
 setenv CASE     ${MACH}_${COMPSET}_${MRES}_${CCSMTAG}_v54a_clean_1600p
