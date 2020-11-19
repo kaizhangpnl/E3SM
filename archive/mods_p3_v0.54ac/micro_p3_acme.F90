@@ -6,15 +6,13 @@ module micro_p3_acme
 !!
 !! Author: Kai Zhang 
 !!
-!! Last updated: 2017-11-28
-!!
 !! Features: 
 !!
 !!   1. support two kinds of subgrid treatment 
 !!   2. can be run along with MG2 without impact on met fields 
 !!   3. all output variables with 'P3_' in name 
 !! 
-!! Current version: 0.52
+!! Current version: 0.54ac
 !! 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
